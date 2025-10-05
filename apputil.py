@@ -1,29 +1,57 @@
-import seaborn as sns
+
 import pandas as pd
 
 
-def fibonacci(n):
-    # Function internal variables
-    seq = [0, 1] 
-    iterator = 2
-    a = 0
-    b = 1
+def fib(n, i=2, fib_sequence=None):
+    """Returns a list of Fibonacci numbers up to n recursively"""
+    # Determines conditions for returning the fibonacci sequence
+    if n == 1:
+        return [1]
+    elif n == 2:
+        return [1, 1]
+    if i == n:
+        return fib_sequence
+    
+    # Sets up the fibonacci sequence
+    if fib_sequence is None:
+        fib_sequence = [1, 1]
 
-    def recursive(iterator, a, b):
-        # Exit function
-        if iterator == n + 1:
-            return
-        
-        # Get next value in list and append
-        x = seq[a] + seq[b]
-        seq.append(x)
+    # Adds last two values in fib_sequence to get the next value
+    fib_sequence.append(fib_sequence[-1] + fib_sequence[-2])
 
-        # Increment on variables for next call
-        iterator+=1
-        a+=1
-        b+=1
+    return fib(n, i + 1, fib_sequence)
 
-        recursive(iterator, a, b)
+def to_binary(n, binary_sequence=[]):
+    """Returns the binary representation of n recursively"""
 
-    recursive(iterator, a, b)
-    return seq
+    # Determines condition for returning binary representation
+    if n == 0:
+        return "".join(str(digit) for digit in binary_sequence[::-1])
+    
+    # Appends each remainder to binary_sequence and iterates
+    else:
+        binary_sequence.append(n % 2)
+        return to_binary(n // 2, binary_sequence)
+
+def task_1():
+    # Replace ? in gender values with NaN
+    df_bellevue.replace({'gender': {'?': np.nan}}, inplace=True)
+
+    # Return the number of missing values per column in ascending order
+    return (df_bellevue.shape[0] - df_bellevue.count()).sort_values().index
+
+def task_2():
+    # Create a year column from the date_in column
+    df_bellevue['year'] = df_bellevue['date_in'].str[:4].astype(int)
+
+    # Return a DataFrame with the total number of admissions per year
+    return df_bellevue.groupby('year')['year'].count().rename("total_admissions").reset_index()
+
+def task_3():
+    # Calculate the average age within each gender group
+    return df_bellevue.groupby('gender').mean('age').round(1)
+
+def task_4():
+    # Return the top 5 most common professions
+    return df_bellevue['profession'].value_counts().sort_values(ascending=False).head(5).index
+
