@@ -1,11 +1,12 @@
 
 import pandas as pd
+import numpy as np
 
 url = 'https://github.com/melaniewalsh/Intro-Cultural-Analytics/raw/master/book/data/bellevue_almshouse_modified.csv'
 df_bellevue = pd.read_csv(url)
 
 
-def fibonnaci(n, i=2, fib_sequence=None):
+def fibonacci(n, i=2, fib_sequence=None):
     """Returns a list of Fibonacci numbers up to n recursively"""
     # Determines conditions for returning the fibonacci sequence
     if n == 1:
@@ -22,7 +23,7 @@ def fibonnaci(n, i=2, fib_sequence=None):
     # Adds last two values in fib_sequence to get the next value
     fib_sequence.append(fib_sequence[-1] + fib_sequence[-2])
 
-    return fibonnaci(n, i + 1, fib_sequence)
+    return fibonacci(n, i + 1, fib_sequence)
 
 def to_binary(n, binary_sequence=None):
     """Returns the binary representation of n recursively"""
@@ -57,9 +58,8 @@ def task_2():
 
 def task_3():
     # Calculate the average age within each gender group
-    return df_bellevue.groupby('gender').mean('age').round(1)
+    return df_bellevue.groupby('gender')['age'].mean().round(1)
 
 def task_4():
     # Return the top 5 most common professions
-    return df_bellevue['profession'].value_counts().sort_values(ascending=False).head(5).index
-
+    return list(df_bellevue['profession'].value_counts().sort_values(ascending=False).head(5).index)
