@@ -9,9 +9,11 @@ df_bellevue = pd.read_csv(url)
 def fibonacci(n, i=2, fib_sequence=None):
     """Returns a list of Fibonacci numbers up to n recursively"""
     # Determines conditions for returning the fibonacci sequence
-    if n < 2:
+    if n == 0:
+        return 0
+    elif n < 3:
         return 1
-    if i == n:
+    elif i == n:
         return fib_sequence[n-1]
     
     # Sets up the fibonacci sequence
@@ -42,7 +44,7 @@ def to_binary(n, binary_sequence=None):
 
 def task_1():
     # Replace ? in gender values with NaN
-    df_bellevue.replace({'gender': {'?': np.nan}}, inplace=True)
+    df_bellevue.replace({'gender': {'?': np.nan, 'g': np.nan, 'h': np.nan}}, inplace=True)
 
     # Return the number of missing values per column in ascending order
     return list((df_bellevue.shape[0] - df_bellevue.count()).sort_values().index)
