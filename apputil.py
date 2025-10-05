@@ -9,12 +9,10 @@ df_bellevue = pd.read_csv(url)
 def fibonacci(n, i=2, fib_sequence=None):
     """Returns a list of Fibonacci numbers up to n recursively"""
     # Determines conditions for returning the fibonacci sequence
-    if n == 1:
-        return [1]
-    elif n == 2:
-        return [1, 1]
+    if n < 2:
+        return 1
     if i == n:
-        return fib_sequence
+        return fib_sequence[n-1]
     
     # Sets up the fibonacci sequence
     if fib_sequence is None:
@@ -47,7 +45,7 @@ def task_1():
     df_bellevue.replace({'gender': {'?': np.nan}}, inplace=True)
 
     # Return the number of missing values per column in ascending order
-    return (df_bellevue.shape[0] - df_bellevue.count()).sort_values().index
+    return list((df_bellevue.shape[0] - df_bellevue.count()).sort_values().index)
 
 def task_2():
     # Create a year column from the date_in column
