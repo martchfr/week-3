@@ -1,8 +1,11 @@
 
 import pandas as pd
 
+url = 'https://github.com/melaniewalsh/Intro-Cultural-Analytics/raw/master/book/data/bellevue_almshouse_modified.csv'
+df_bellevue = pd.read_csv(url)
 
-def fib(n, i=2, fib_sequence=None):
+
+def fibonnaci(n, i=2, fib_sequence=None):
     """Returns a list of Fibonacci numbers up to n recursively"""
     # Determines conditions for returning the fibonacci sequence
     if n == 1:
@@ -19,13 +22,18 @@ def fib(n, i=2, fib_sequence=None):
     # Adds last two values in fib_sequence to get the next value
     fib_sequence.append(fib_sequence[-1] + fib_sequence[-2])
 
-    return fib(n, i + 1, fib_sequence)
+    return fibonnaci(n, i + 1, fib_sequence)
 
-def to_binary(n, binary_sequence=[]):
+def to_binary(n, binary_sequence=None):
     """Returns the binary representation of n recursively"""
 
+    # Sets up binary sequence
+    if binary_sequence is None:
+        binary_sequence = []
+
     # Determines condition for returning binary representation
-    if n == 0:
+    if n < 2:
+        binary_sequence.append(n)
         return "".join(str(digit) for digit in binary_sequence[::-1])
     
     # Appends each remainder to binary_sequence and iterates
